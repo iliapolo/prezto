@@ -12,6 +12,9 @@ export PATH="/usr/local/bin:$PATH"
 # tell prezto where python is installed for the virtualenvwrapper plugin
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 
+# export JAVA_HOME for things like maven
+export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
