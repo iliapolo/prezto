@@ -5,6 +5,10 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Homebrew installs stuff under /usr/local/bin (instead of /usr/bin) so we need
+# to put that path first in order to actually use what brew installed
+export PATH="/usr/local/bin:$PATH"
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
