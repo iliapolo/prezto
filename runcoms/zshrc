@@ -15,12 +15,18 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 # export JAVA_HOME for things like maven
 export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
 
-# Source Prezto.
+# source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Source virtualenvwrapper
+# source virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/dev/src
 source /usr/local/bin/virtualenvwrapper.sh
+
+# source secret env variables
+source ${HOME}/.secrets
+
+# added by travis gem
+[ -f ${HOME}/.travis/travis.sh ] && source ${HOME}/.travis/travis.sh
