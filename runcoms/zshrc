@@ -1,32 +1,47 @@
 #
 # Executes commands at the start of an interactive session.
 #
-# Authors:
+# Original Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+# Changes By:
+#   Eli Polonsky <eli.polonsky@gmail.com>
 
 # homebrew installs stuff under /usr/local/bin (instead of /usr/bin) so we need
 # to put that path first in order to actually use what brew installed
 export PATH="/usr/local/bin:$PATH"
 
-# tell prezto where python is installed for the virtualenvwrapper plugin
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+# tell virtualenvwrapper where python is installed (avoid any default assumptions)
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+
+# tell virtualenvwrapper where virtualenv is installed (avoid any default assumptions)
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+
+# tell virtualenvwrapper where to put virtual environments
+export WORKON_HOME=$HOME/dev/virtualenvs
 
 # export JAVA_HOME for things like maven
-export JAVA_HOME="`/usr/libexec/java_home -v 1.8`"
+export JAVA_HOME="`/usr/libexec/java_home`"
 
 # source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
 # source virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/dev/src
 source /usr/local/bin/virtualenvwrapper.sh
 
-# source secret env variables
-source ${HOME}/.secrets
+# source env
+for line in $(cat ${HOME}/.env); do
+    export $line
+    key=$(cut -d'=' -f1 <<<${line})
+    value=$(cut -d'=' -f2 <<<${line})
 
-# added by travis gem
-[ -f ${HOME}/.travis/travis.sh ] && source ${HOME}/.travis/travis.sh
+    # on MacOS GUI applications inherit env from launchctl and not the shell
+    # specifically this was created so that IntelliJ will have all the environment variables my shell has
+    launchctl setenv ${key} ${value}
+
+done
+
+# show tasks
+task
+
+alias lpldap="lpass show LDAP --password | tr -d '\n' | pbcopy"
