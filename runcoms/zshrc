@@ -7,27 +7,11 @@
 # Changes By:
 #   Eli Polonsky <eli.polonsky@gmail.com>
 
-# homebrew installs stuff under /usr/local/bin (instead of /usr/bin) so we need
-# to put that path first in order to actually use what brew installed
-export PATH="/usr/local/bin:$PATH"
-
-# tell virtualenvwrapper where python is installed (avoid any default assumptions)
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-
-# tell virtualenvwrapper where virtualenv is installed (avoid any default assumptions)
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-
 # tell virtualenvwrapper where to put virtual environments
 export WORKON_HOME=$HOME/dev/virtualenvs
 
-# export JAVA_HOME for things like maven
-export JAVA_HOME="`/usr/libexec/java_home`"
-
 # source Prezto.
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-
-# source virtualenvwrapper
-source /usr/local/bin/virtualenvwrapper.sh
 
 # source env
 for line in $(cat ${HOME}/.env); do
@@ -43,5 +27,3 @@ done
 
 # show tasks
 task
-
-alias lpldap="lpass show LDAP --password | tr -d '\n' | pbcopy"
