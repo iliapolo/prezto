@@ -7,9 +7,6 @@
 # Changes By:
 #   Eli Polonsky <eli.polonsky@gmail.com>
 
-# tell virtualenvwrapper where to put virtual environments
-export WORKON_HOME=$HOME/dev/virtualenvs
-
 # source Prezto.
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 
